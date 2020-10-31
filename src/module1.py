@@ -14,3 +14,9 @@ class Player:
 
     #def add_death(self, level):
         #self.deaths.append(level)
+
+class OnlinePlayer:
+    def __init__(self, name, level, vocation):
+        self.name = name
+        self.level = int(level)
+        self.vocation = vocation
