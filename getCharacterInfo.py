@@ -3,7 +3,7 @@ import lxml
 from bs4 import BeautifulSoup
 import pyperclip
 import re
-from filterData import *
+from filterData import list_contains_string, char_data_row
 
 
 def get_character_info(characterName): 
