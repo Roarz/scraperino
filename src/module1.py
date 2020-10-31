@@ -10,5 +10,5 @@ class Player:
         self.lastLogin = lastLogin
         self.deaths = {}
 
-    def add_death(self, level):
-        self.deaths.append(level)
+    #def add_death(self, level):
+        #self.deaths.append(level)

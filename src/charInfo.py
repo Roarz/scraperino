@@ -34,7 +34,7 @@ def parse_char_stats(playerInfo):
 
         if row.string == "Character Deaths":
             deathsRows = row.parent.findChildren("tr")
-            print("info: ", len(deathsRows))
+            print("deaths count: ", len(deathsRows))
             for death in deathsRows:
                 cols = death.findChildren("td")
                 if len(cols) == 2:
@@ -46,8 +46,8 @@ def parse_char_stats(playerInfo):
     return player
 
 def display_player_info(player):
+    print("player: ", player.name, player.level, player.lastLogin, len(player.deaths), "deaths")
+    print("")
     for k in player.deaths.values():
         print(k)
     print("")
-    print("player: ", player.name, player.level, player.lastLogin, len(player.deaths), "deaths")
-
