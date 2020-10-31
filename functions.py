@@ -21,9 +21,7 @@ def list_contains_string(lst, string):
         if string==v:
             return True
     return False
-
-def get_deaths():
-    return False
+    
 
 def is_online():
     return False
