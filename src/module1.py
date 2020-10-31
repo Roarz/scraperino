@@ -6,7 +6,6 @@ class Player:
         self.level = level
         self.world = world
         self.residence = residence
-        self.guild = ""
         self.lastLogin = lastLogin
         self.deaths = {}
      

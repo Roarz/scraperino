@@ -16,8 +16,8 @@ def save_player_json(player):
 
 #print_player_info("Excail Oz")
 #print_player_info("Azxkhar Te Pekea")
-print_player_info("Young Kodak")
+#print_player_info("Young Kodak")
 
-lad = get_player_obj("Young Kodak")
-save_player_json(lad)
+#lad = get_player_obj("Young Kodak")
+#save_player_json(lad)
 

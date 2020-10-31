@@ -17,7 +17,7 @@ def parse_char_stats(playerInfo):
     stats = playerInfo.find_all(char_data_row)
     results = {}
     deaths = {}
-    player_information = ["Name:","Sex:","Vocation:","Level:","World:","Residence:","Guild","Last Login:"]
+    player_information = ["Name:","Sex:","Vocation:","Level:","World:","Residence:","Last Login:"]
 
     for row in stats:
         col = row.findChildren("td")
