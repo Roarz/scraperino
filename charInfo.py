@@ -6,18 +6,18 @@ import re
 from functions import list_contains_string, char_data_row
 import module1
 
-def character_info_table(characterName):
-    requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % characterName
+def get_player_info_table(playerName):
+    requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % playerName
     source = requests.get(requestString).text
     soup = BeautifulSoup(source,'lxml')
     charContainer = soup.find('div','BoxContent')
     return charContainer
 
-def get_char_stats(charInfo):
-    stats = charInfo.find_all(char_data_row)
+def parse_char_stats(playerInfo):
+    stats = playerInfo.find_all(char_data_row)
     results = {}
     deaths = {}
-    character_information = ["Name:","Sex:","Vocation:","Level:","World:","Residence:","Guild","Last Login:"]
+    player_information = ["Name:","Sex:","Vocation:","Level:","World:","Residence:","Guild","Last Login:"]
 
     for row in stats:
         col = row.findChildren("td")
@@ -27,7 +27,7 @@ def get_char_stats(charInfo):
             key = col[0].text
             val = col[1].text
 
-            if list_contains_string(character_information, key):
+            if list_contains_string(player_information, key):
                 normalisedKey = re.search(r"(.*):", key)
                 normalisedKey = normalisedKey.group(1)
                 results[normalisedKey] = val
@@ -40,19 +40,14 @@ def get_char_stats(charInfo):
                 if len(cols) == 2:
                     deaths[cols[0].text] = cols[1].text
 
-    character = module1.Character(results["Name"],results["Sex"],results["Vocation"],results["Level"],results["World"],results["Residence"],results["Last Login"])
-    character.deaths = deaths
+    player = module1.Player(results["Name"],results["Sex"],results["Vocation"],results["Level"],results["World"],results["Residence"],results["Last Login"])
+    player.deaths = deaths
 
-    return character
+    return player
 
-def display_character_info(character):
-    for k in char.deaths.values():
+def display_player_info(player):
+    for k in player.deaths.values():
         print(k)
     print("")
-    print("char: ", char.name, char.level, char.lastLogin, len(char.deaths), "deaths")
+    print("player: ", player.name, player.level, player.lastLogin, len(player.deaths), "deaths")
 
-
-charName = "Cleitinho Tacaesside"
-charInfo = character_info_table(charName)
-char = get_char_stats(charInfo)
-display_character_info(char)

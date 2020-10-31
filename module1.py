@@ -1,4 +1,4 @@
-class Character:
+class Player:
     def __init__(self, name, sex, vocation, level, world, residence, lastLogin):
         self.name = name
         self.sex = sex
