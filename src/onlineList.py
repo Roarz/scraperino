@@ -23,16 +23,11 @@ def parse_online_player(row):
     player = module1.OnlinePlayer(props[0],props[1],props[2])
     return player
 
-def filter_players(onlineList):
+def filter_players(onlineList, minLvl=100, maxLvl=250):
     playersList = []
     for row in onlineList:
         player = parse_online_player(row)
-        if player.level > 100 and player.level < 250:
+        if player.level >= minLvl and player.level <= maxLvl:
             #print(player.name, player.level, player.vocation)
             playersList.append(player)
     return playersList
-
-onlineList = get_online_list("Wintera")
-targets = filter_players(onlineList)
-for t in targets:
-    print(t.name, t.level, t.vocation)
