@@ -14,3 +14,6 @@ scrape tibia.com to find char info
 
 # then:
 caching
+
+# structure:
+Python console app scrape the website every so often. If it finds something interesting, pump it out over the queue.

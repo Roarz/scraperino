@@ -9,6 +9,9 @@ class Player:
         self.guild = ""
         self.lastLogin = lastLogin
         self.deaths = {}
+     
+    def __len__(self):
+        return len(self.deaths)
 
     #def add_death(self, level):
         #self.deaths.append(level)
