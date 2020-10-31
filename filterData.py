@@ -27,3 +27,5 @@ def get_deaths():
 
 def is_online():
     return False
+
+#def print_dictionary(dic):#    for v in dic.values
