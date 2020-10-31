@@ -13,18 +13,20 @@ class TestStringMethods(unittest.TestCase):
         self.assertGreater(len(targets),50)
 
     def test_highest_player(self):
-        targets = filter_players(onlineList, minLvl=60, maxLvl=250)
+        targets = filter_players(onlineList, minLvl=minLvl, maxLvl=maxLvl)
         highestPlayer = targets[len(targets) -1]
         highest = highestPlayer.level
         print("highest: %s" % highestPlayer.name, "(%s)" % highestPlayer.level, highestPlayer.vocation)
-        self.assertLessEqual(highest, 250)
+        self.assertLessEqual(highest, maxLvl)
 
     def test_lowest_player(self):
-        targets = filter_players(onlineList, minLvl=60, maxLvl=250)
+        targets = filter_players(onlineList, minLvl=minLvl, maxLvl=maxLvl)
         lowest = targets[0].level
         print("lowest: %s" % targets[0].name, "(%s)" % targets[0].level, targets[0].vocation)
-        self.assertGreaterEqual(lowest, 60)
+        self.assertGreaterEqual(lowest, minLvl)
 
+minLvl = 60
+maxLvl = 250
 onlineList = get_online_list("Wintera")
 
 if __name__ == '__main__':
