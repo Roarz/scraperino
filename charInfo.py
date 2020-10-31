@@ -6,7 +6,7 @@ import re
 from functions import list_contains_string, char_data_row
 
 
-def get_character_info(characterName): 
+def get_char_stats(characterName): 
     requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % characterName
     source = requests.get(requestString).text
     soup = BeautifulSoup(source,'lxml')
@@ -26,7 +26,16 @@ def get_character_info(characterName):
             val = col[1].text
 
             if list_contains_string(character_information, key):
-                results[key] = val
-                print(key, val)
+                normalisedKey = re.search(r"(.*):", key)
+                normalisedKey = normalisedKey.group(1)
+                results[normalisedKey] = val
     
     return results
+
+def get_deaths(characterName):
+    charInfo = get_char_stats(characterName)
+    print(charInfo["World"])
+    print(charInfo["Name"])
+    print(charInfo["Level"])
+
+get_deaths("ya")

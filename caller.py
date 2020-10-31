@@ -1,3 +1,3 @@
-from charInfo import get_character_info
+from charInfo import get_char_stats
 
-get_character_info("ya")
+get_char_stats("ya")
