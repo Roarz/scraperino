@@ -3,7 +3,7 @@ import lxml
 from bs4 import BeautifulSoup
 import pyperclip
 import re
-from functions import list_contains_string, char_data_row, char_deaths_row
+from functions import list_contains_string, char_data_row
 import module1
 
 def character_info_table(characterName):
