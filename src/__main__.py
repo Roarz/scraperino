@@ -1,8 +1,17 @@
 from sendCharInfo import check_player
-import time
+import time, sys, os
 
 def main():
-    check_player("Arkaykos Slayer")
+    while True:
+        check_player("Arkaykos Slayer")
+        time.sleep(5)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
