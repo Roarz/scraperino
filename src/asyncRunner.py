@@ -1,6 +1,6 @@
-from sendCharInfo import check_player, get_player_obj, send_player
+from sendCharInfo import send_player
 from onlineList import get_online_list, filter_players
-from charInfo import get_player_info_table, response_to_player
+from charInfo import response_to_player
 import time, sys, os
 import asyncio
 import requests
@@ -16,6 +16,7 @@ def char_to_url(playerName):
     requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % res_str
     return requestString
 
+failedUrls = []
 async def get(url):
     try:
         async with aiohttp.ClientSession() as session:
@@ -25,6 +26,9 @@ async def get(url):
                 players.append(player)
                 send_player(player)
                 #print("Successfully got url {} with response of length {}.".format(url, player.name))
+    except AttributeError as ae:
+        print("attr err to get url {} due to {}.".format(url, ae.__class__))
+        failedUrls.append(url)
     except Exception as e:
         print("Unable to get url {} due to {}.".format(url, e.__class__))
 
@@ -32,6 +36,10 @@ async def get(url):
 async def main(urls, amount):
     ret = await asyncio.gather(*[get(url) for url in urls])
     print("Finalized all. ret is a list of len {} outputs.".format(len(ret)))
+    for f in failedUrls:
+        print("failed url: %s" % f)
+    failed = await asyncio.gather(*[get(url.lower()) for url in failedUrls])
+    print("Finalized all failed ones. ret is a list of len {} outputs.".format(len(failed)))
     print("done")
 
 def addRequests(targets):
@@ -43,7 +51,7 @@ def addRequests(targets):
 players = []
 urls = []
 onlineList = get_online_list("Wintera")
-targets = filter_players(onlineList, minLvl=40, maxLvl=150)
+targets = filter_players(onlineList, minLvl=7, maxLvl=160)
 addRequests(targets)
 
 amount = len(urls)
