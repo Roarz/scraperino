@@ -43,7 +43,7 @@ def addRequests(targets):
 players = []
 urls = []
 onlineList = get_online_list("Wintera")
-targets = filter_players(onlineList, minLvl=2, maxLvl=20)
+targets = filter_players(onlineList, minLvl=40, maxLvl=150)
 addRequests(targets)
 
 amount = len(urls)
@@ -56,5 +56,3 @@ end = time.time()
 print("")
 print("Took {} seconds to pull {} characters.".format(end - start, amount))
 print("")
-
-time.sleep(10)
