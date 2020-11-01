@@ -34,14 +34,17 @@ async def main(urls, amount):
     print("Finalized all. ret is a list of len {} outputs.".format(len(ret)))
     print("done")
 
+def addRequests(targets):
+    for t in targets:
+        req = char_to_url(t.name)
+        urls.append(req)
+        print(req)
+
 players = []
 urls = []
 onlineList = get_online_list("Wintera")
-targets = filter_players(onlineList, minLvl=8, maxLvl=100)
-for t in targets:
-    req = char_to_url(t.name)
-    urls.append(req)
-    print(req)
+targets = filter_players(onlineList, minLvl=2, maxLvl=20)
+addRequests(targets)
 
 amount = len(urls)
 print("total targets: %s" % amount)
@@ -51,7 +54,7 @@ asyncio.run(main(urls, amount))
 end = time.time()
 
 print("")
-print("Took {} seconds to pull {} websites.".format(end - start, amount))
+print("Took {} seconds to pull {} characters.".format(end - start, amount))
 print("")
 
 time.sleep(10)

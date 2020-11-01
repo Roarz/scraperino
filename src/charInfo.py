@@ -45,7 +45,7 @@ def parse_char_stats(playerInfo):
 
         if row.string == "Character Deaths":
             deathsRows = row.parent.findChildren("tr")
-            print("deaths count: ", len(deathsRows))
+            #print("deaths count: ", len(deathsRows))
             for death in deathsRows:
                 cols = death.findChildren("td")
                 if len(cols) == 2:
