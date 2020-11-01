@@ -20,12 +20,16 @@ def save_player_json(player):
     print(player)
 
 def check_player(player):
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-    channel = connection.channel()
-    channel.queue_declare(queue='hello')
-    print_player_info(player)
-    lad = get_player_obj(player)
-    channel.basic_publish(exchange='', routing_key='hello', body=jsonpickle.encode(lad, unpicklable=False))
-    print("[x] Sent '%s'" % lad.name)
-    connection.close()
+    player = get_player_obj(player)
+    send_player(player)
+
+def send_player(player):
+    channel.basic_publish(exchange='', routing_key='hello', body=jsonpickle.encode(player, unpicklable=False))
+    print("[x] Sent '%s'" % player.name)
+    #connection.close()
+
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+channel = connection.channel()
+channel.queue_declare(queue='hello')
+print("opening channel")
 

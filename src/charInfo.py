@@ -7,7 +7,9 @@ from functions import list_contains_string, char_data_row
 import module1
 
 def get_player_info_table(playerName):
-    requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % playerName
+    res_str = re.sub("\s","+",playerName)
+    requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % res_str
+    print("req string (%s)" % requestString)
     source = requests.get(requestString).text
     soup = BeautifulSoup(source,'lxml')
     charContainer = soup.find('div','BoxContent')
@@ -39,7 +41,7 @@ def parse_char_stats(playerInfo):
                 cols = death.findChildren("td")
                 if len(cols) == 2:
                     deaths[cols[0].text] = cols[1].text
-
+    
     player = module1.Player(results["Name"],results["Sex"],results["Vocation"],results["Level"],results["World"],results["Residence"],results["Last Login"])
     player.deaths = deaths
 
