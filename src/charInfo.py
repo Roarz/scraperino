@@ -5,15 +5,24 @@ import pyperclip
 import re
 from functions import list_contains_string, char_data_row
 import module1
+import asyncio
+import aiohttp
+import time
 
 def get_player_info_table(playerName):
-    res_str = re.sub("\s","+",playerName)
+    res_str = re.sub(r"\s","+",playerName)
     requestString = "https://www.tibia.com/community/?subtopic=characters&name=%s" % res_str
     print("req string (%s)" % requestString)
     source = requests.get(requestString).text
     soup = BeautifulSoup(source,'lxml')
     charContainer = soup.find('div','BoxContent')
     return charContainer
+
+def response_to_player(response):
+    soup = BeautifulSoup(response,'lxml')
+    charContainer = soup.find('div','BoxContent')
+    player = parse_char_stats(charContainer)
+    return player
 
 def parse_char_stats(playerInfo):
     stats = playerInfo.find_all(char_data_row)
