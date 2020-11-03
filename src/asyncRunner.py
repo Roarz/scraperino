@@ -32,15 +32,22 @@ async def get(url):
     except Exception as e:
         print("Unable to get url {} due to {}.".format(url, e.__class__))
 
+def chunks(lst, n):
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
+def chunk_in_chunks(chunks, *do):
+    for x in range(0, len(chunks)):
+        for y in chunks[x]:
+            print(y)
+        
 async def main(urls, amount):
     ret = await asyncio.gather(*[get(url) for url in urls])
-    print("Finalized all. ret is a list of len {} outputs.".format(len(ret)))
+    print("{} urls parsed".format(len(ret)))
     for f in failedUrls:
         print("failed url: %s" % f)
     failed = await asyncio.gather(*[get(url.lower()) for url in failedUrls])
-    print("Finalized all failed ones. ret is a list of len {} outputs.".format(len(failed)))
-    print("done")
+    print("{} failed ones".format(len(failed)))
 
 def addRequests(targets):
     for t in targets:
@@ -51,15 +58,24 @@ def addRequests(targets):
 players = []
 urls = []
 onlineList = get_online_list("Wintera")
-targets = filter_players(onlineList, minLvl=7, maxLvl=160)
+targets = filter_players(onlineList, minLvl=30, maxLvl=300)
 addRequests(targets)
-
 amount = len(urls)
 print("total targets: %s" % amount)
 
+
+groupSize = 50
 start = time.time()
-asyncio.run(main(urls, amount))
+urlChunks = list(chunks(urls, groupSize))
+
+for i in range(0, len(urlChunks)):
+    asyncio.run(main(urlChunks[i], 1))
+    print("done group: ", i+1, " of ", len(urlChunks))
+    time.sleep(2)
+
 end = time.time()
+
+
 
 print("")
 print("Took {} seconds to pull {} characters.".format(end - start, amount))
